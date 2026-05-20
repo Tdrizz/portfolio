@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Tittan Olson — Software Engineer and Web Designer based on the Big Island, Hawaiʻi.">
+  <meta property="og:title" content="Tittan Olson">
+  <meta property="og:description" content="Software Engineer & Web Designer. Available for freelance.">
+  <meta property="og:type" content="website">
+  <title>Tittan Olson</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg:           #0c0c0b;
+      --surface:      #141311;
+      --text:         #ede8e0;
+      --muted:        #6b6560;
+      --accent:       #c9a55a;
+      --border:       rgba(237, 232, 224, 0.09);
+      --font-display: 'Syne', sans-serif;
+      --font-serif:   'Cormorant Garamond', serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-display);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Film grain overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.032;
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      padding: 1.6rem 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background 0.4s, backdrop-filter 0.4s, border-color 0.4s;
+      border-bottom: 1px solid transparent;
+    }
+
+    nav.scrolled {
+      background: rgba(12, 12, 11, 0.88);
+      backdrop-filter: blur(14px);
+      border-bottom-color: var(--border);
+    }
+
+    .nav-logo {
+      font-weight: 800;
+      font-size: 0.85rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 2.5rem 5rem;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: rgba(201, 165, 90, 0.08);
+      border: 1px solid rgba(201, 165, 90, 0.22);
+      color: var(--accent);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 0.45rem 1rem;
+      margin-bottom: 2.5rem;
+      width: fit-content;
+      animation: fadeUp 0.9s ease 0.15s both;
+    }
+
+    .hero-badge .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: pulse 2.2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.35; transform: scale(0.7); }
+    }
+
+    .hero-name {
+      font-weight: 800;
+      font-size: clamp(4rem, 11vw, 10rem);
+      line-height: 0.9;
+      letter-spacing: -0.025em;
+      text-transform: uppercase;
+      margin-bottom: 2.2rem;
+      animation: fadeUp 1s ease 0.3s both;
+    }
+
+    .hero-name .serif-line {
+      display: block;
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-weight: 300;
+      color: var(--accent);
+      font-size: 0.82em;
+      letter-spacing: -0.01em;
+    }
+
+    .hero-rule {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin-bottom: 1.8rem;
+      animation: fadeUp 0.8s ease 0.5s both;
+    }
+
+    .hero-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 2rem;
+      animation: fadeUp 0.8s ease 0.6s both;
+    }
+
+    .hero-descriptor {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: clamp(1.05rem, 2.2vw, 1.45rem);
+      color: var(--muted);
+      font-weight: 300;
+      max-width: 460px;
+      line-height: 1.6;
+    }
+
+    .hero-meta {
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .hero-meta p {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+      color: var(--muted);
+      line-height: 2;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── SHARED ── */
+    section { padding: 7rem 2.5rem; border-top: 1px solid var(--border); }
+
+    .section-label {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 3.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .section-label::after {
+      content: '';
+      width: 32px;
+      height: 1px;
+      background: var(--accent);
+      opacity: 0.45;
+    }
+
+    /* ── WORK ── */
+    .work-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border: 1px solid var(--border);
+      gap: 1px;
+      background: var(--border);
+    }
+
+    .work-card {
+      background: var(--bg);
+      padding: 3rem 2.5rem 2.5rem;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.35s;
+    }
+
+    .work-card:hover { background: var(--surface); }
+
+    .work-card .arrow {
+      position: absolute;
+      top: 2.2rem;
+      right: 2.2rem;
+      font-size: 1.1rem;
+      color: var(--muted);
+      transition: transform 0.35s cubic-bezier(.34,1.56,.64,1), color 0.25s;
+      display: inline-block;
+    }
+
+    .work-card:hover .arrow {
+      transform: translate(4px, -4px);
+      color: var(--accent);
+    }
+
+    .card-num {
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1.8rem;
+    }
+
+    .card-name {
+      font-family: var(--font-serif);
+      font-size: clamp(1.7rem, 3vw, 2.4rem);
+      font-weight: 400;
+      line-height: 1.05;
+      margin-bottom: 0.6rem;
+    }
+
+    .card-role {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.6rem;
+    }
+
+    .card-desc {
+      font-family: var(--font-serif);
+      font-size: 1.02rem;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.75;
+      margin-bottom: 2rem;
+    }
+
+    .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+    }
+
+    .tag {
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 0.28rem 0.65rem;
+    }
+
+    /* ── ABOUT ── */
+    #about {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 6rem;
+      align-items: start;
+    }
+
+    .about-text p {
+      font-family: var(--font-serif);
+      font-size: 1.12rem;
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.9;
+      color: rgba(237, 232, 224, 0.7);
+      margin-bottom: 1.4rem;
+    }
+
+    .about-text p strong {
+      font-style: normal;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .skills-block { margin-top: 2.5rem; }
+
+    .skills-label {
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+    }
+
+    .chip {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 0.38rem 0.85rem;
+    }
+
+    .detail-rows { padding-top: 1rem; }
+
+    .detail-row {
+      border-top: 1px solid var(--border);
+      padding: 1.4rem 0;
+    }
+
+    .detail-row:last-child { border-bottom: 1px solid var(--border); }
+
+    .detail-key {
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.45rem;
+    }
+
+    .detail-val {
+      font-family: var(--font-serif);
+      font-size: 1.05rem;
+      font-weight: 400;
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    /* ── CONTACT ── */
+    #contact {
+      text-align: center;
+      padding: 9rem 2.5rem;
+    }
+
+    #contact .section-label {
+      justify-content: center;
+    }
+
+    #contact .section-label::after { display: none; }
+
+    .contact-headline {
+      font-family: var(--font-serif);
+      font-size: clamp(2.8rem, 8vw, 6rem);
+      font-weight: 300;
+      line-height: 1.08;
+      margin: 1.5rem auto 3.5rem;
+      max-width: 800px;
+    }
+
+    .contact-headline em {
+      font-style: italic;
+      color: var(--muted);
+    }
+
+    .contact-email-link {
+      display: inline-block;
+      font-weight: 700;
+      font-size: clamp(0.95rem, 2.5vw, 1.4rem);
+      letter-spacing: 0.04em;
+      color: var(--text);
+      text-decoration: none;
+      border-bottom: 1px solid var(--accent);
+      padding-bottom: 0.25rem;
+      transition: color 0.22s;
+    }
+
+    .contact-email-link:hover { color: var(--accent); }
+
+    .contact-socials {
+      display: flex;
+      justify-content: center;
+      gap: 2.5rem;
+      margin-top: 3rem;
+    }
+
+    .contact-socials a {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .contact-socials a:hover { color: var(--text); }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    footer p {
+      font-size: 0.63rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.75s ease, transform 0.75s ease;
+    }
+
+    .reveal.visible { opacity: 1; transform: none; }
+    .reveal.d1 { transition-delay: 0.10s; }
+    .reveal.d2 { transition-delay: 0.22s; }
+    .reveal.d3 { transition-delay: 0.34s; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1.2rem 1.5rem; }
+      .nav-links { display: none; }
+      .hero { padding: 0 1.5rem 4rem; }
+      .hero-bottom { flex-direction: column; align-items: flex-start; }
+      .hero-meta { text-align: left; }
+      section { padding: 5rem 1.5rem; }
+      .work-grid { grid-template-columns: 1fr; }
+      #about { grid-template-columns: 1fr; gap: 3rem; }
+      footer { flex-direction: column; gap: 0.75rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="nav">
+    <a href="#" class="nav-logo">T · O</a>
+    <ul class="nav-links">
+      <li><a href="#work">Work</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero" id="home">
+    <div class="hero-badge">
+      <span class="dot"></span>
+      Available for Freelance
+    </div>
+    <h1 class="hero-name">
+      Tittan
+      <span class="serif-line">Olson</span>
+    </h1>
+    <hr class="hero-rule">
+    <div class="hero-bottom">
+      <p class="hero-descriptor">Software engineer & web designer. Building clean, functional digital work from the Big Island.</p>
+      <div class="hero-meta">
+        <p>Big Island, Hawaiʻi</p>
+        <p>Web Design · Development</p>
+        <p>Security · SEO</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="work">
+    <div class="section-label reveal">Selected Work</div>
+    <div class="work-grid reveal d1">
+
+      <div class="work-card">
+        <span class="arrow">↗</span>
+        <div class="card-num">01</div>
+        <h3 class="card-name">UniData</h3>
+        <div class="card-role">Co-Founder</div>
+        <p class="card-desc">Co-founded a data-focused platform built to streamline how organizations access and act on information. Involved across product design, technical architecture, and positioning.</p>
+        <div class="card-tags">
+          <span class="tag">Startup</span>
+          <span class="tag">Product</span>
+          <span class="tag">Data</span>
+          <span class="tag">Full-Stack</span>
+        </div>
+      </div>
+
+      <div class="work-card">
+        <span class="arrow">↗</span>
+        <div class="card-num">02</div>
+        <h3 class="card-name">Freelance<br>Web Design</h3>
+        <div class="card-role">Independent · Designer & Developer</div>
+        <p class="card-desc">End-to-end web design and development for local businesses — from first concept to launch. Responsive builds, real contact forms, domain & hosting setup, and foundational SEO.</p>
+        <div class="card-tags">
+          <span class="tag">Web Design</span>
+          <span class="tag">HTML / CSS / JS</span>
+          <span class="tag">SEO</span>
+          <span class="tag">Hawaiʻi</span>
+          <span class="tag">Launch Support</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="about-left">
+      <div class="section-label reveal">About</div>
+      <div class="about-text reveal d1">
+        <p>I'm a software engineer and web designer based on the Big Island of Hawaiʻi. I work at the intersection of clean design and practical engineering — building things that look sharp and <strong>actually work</strong>.</p>
+        <p>My background spans <strong>web design</strong>, <strong>backend configuration</strong>, <strong>security hardening</strong>, and <strong>AI data work</strong>. Whether it's launching a local business site from scratch or auditing a platform for vulnerabilities, I bring the same attention to detail to everything I ship.</p>
+        <div class="skills-block">
+          <div class="skills-label">Skills & Tools</div>
+          <div class="chips">
+            <span class="chip">HTML</span>
+            <span class="chip">CSS</span>
+            <span class="chip">JavaScript</span>
+            <span class="chip">Python</span>
+            <span class="chip">React</span>
+            <span class="chip">Web Design</span>
+            <span class="chip">Security Auditing</span>
+            <span class="chip">SEO</span>
+            <span class="chip">Git</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="about-right reveal d2">
+      <div class="section-label">Details</div>
+      <div class="detail-rows">
+        <div class="detail-row">
+          <div class="detail-key">Education</div>
+          <div class="detail-val">B.S. Software Engineering<br>Western Governors University · In Progress</div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-key">Location</div>
+          <div class="detail-val">Big Island, Hawaiʻi</div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-key">Status</div>
+          <div class="detail-val">Open to freelance & contract work</div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-key">Focus Areas</div>
+          <div class="detail-val">Web Design · Backend Config<br>Security Auditing · AI & Data Work</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="section-label reveal">Get in Touch</div>
+    <h2 class="contact-headline reveal d1">
+      Let's build<br><em>something real.</em>
+    </h2>
+    <a href="mailto:tittanolson@gmail.com" class="contact-email-link reveal d2">tittanolson@gmail.com</a>
+    <div class="contact-socials reveal d3">
+      <a href="https://github.com/Tdrizz" target="_blank" rel="noopener">GitHub ↗</a>
+      <a href="mailto:tittanolson@gmail.com">Email ↗</a>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 Tittan Olson</p>
+    <p>Big Island, Hawaiʻi · Open to Freelance</p>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+
+    const reveals = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.08 });
+
+    reveals.forEach(el => io.observe(el));
+  </script>
+</body>
+</html>
