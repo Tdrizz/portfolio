@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Tittan Olson — Software Engineer and Web Designer based on the Big Island, Hawaiʻi.">
-  <meta property="og:title" content="Tittan Olson">
-  <meta property="og:description" content="Software Engineer & Web Designer. Available for freelance.">
+  <meta name="description" content="Tittan Olson — Full-stack software engineer and web designer based on the Big Island, Hawaiʻi. Available for freelance work.">
+  <meta property="og:title" content="Tittan Olson — Software Engineer & Web Designer">
+  <meta property="og:description" content="Full-stack engineer building software products and web experiences from the Big Island of Hawaiʻi. Available for freelance.">
   <meta property="og:type" content="website">
   <title>Tittan Olson</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,9 +17,11 @@
     :root {
       --bg:           #0c0c0b;
       --surface:      #141311;
+      --surface-2:    #191714;
       --text:         #ede8e0;
       --muted:        #6b6560;
       --accent:       #c9a55a;
+      --accent-dim:   rgba(201, 165, 90, 0.12);
       --border:       rgba(237, 232, 224, 0.09);
       --font-display: 'Syne', sans-serif;
       --font-serif:   'Cormorant Garamond', serif;
@@ -44,6 +46,18 @@
       opacity: 0.032;
       pointer-events: none;
       z-index: 999;
+    }
+
+    /* ── SCROLL PROGRESS ── */
+    #progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 2px;
+      width: 0%;
+      background: var(--accent);
+      z-index: 400;
+      transition: width 0.08s linear;
     }
 
     /* ── NAV ── */
@@ -99,7 +113,24 @@
       flex-direction: column;
       justify-content: flex-end;
       padding: 0 2.5rem 5rem;
+      position: relative;
+      overflow: hidden;
     }
+
+    /* Warm glow behind hero text */
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -10%;
+      left: -5%;
+      width: 65%;
+      height: 70%;
+      background: radial-gradient(ellipse at center, rgba(201, 165, 90, 0.065) 0%, transparent 65%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .hero > * { position: relative; z-index: 1; }
 
     .hero-badge {
       display: inline-flex;
@@ -172,13 +203,20 @@
       font-size: clamp(1.05rem, 2.2vw, 1.45rem);
       color: var(--muted);
       font-weight: 300;
-      max-width: 460px;
+      max-width: 500px;
       line-height: 1.6;
+    }
+
+    .hero-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 1.4rem;
+      flex-shrink: 0;
     }
 
     .hero-meta {
       text-align: right;
-      flex-shrink: 0;
     }
 
     .hero-meta p {
@@ -188,6 +226,27 @@
       text-transform: uppercase;
       color: var(--muted);
       line-height: 2;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      text-decoration: none;
+      border: 1px solid rgba(201, 165, 90, 0.25);
+      padding: 0.6rem 1.1rem;
+      transition: background 0.25s, border-color 0.25s, color 0.25s;
+    }
+
+    .hero-cta:hover {
+      background: var(--accent-dim);
+      border-color: rgba(201, 165, 90, 0.5);
+      color: var(--text);
     }
 
     @keyframes fadeUp {
@@ -233,9 +292,43 @@
       position: relative;
       overflow: hidden;
       transition: background 0.35s;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+    .work-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--accent);
+      opacity: 0;
+      transition: opacity 0.35s;
     }
 
     .work-card:hover { background: var(--surface); }
+    .work-card:hover::before { opacity: 0.6; }
+
+    .work-card.featured {
+      grid-column: 1 / -1;
+      padding: 3.5rem 3rem 3rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    .work-card.featured::before { opacity: 0.35; }
+    .work-card.featured:hover::before { opacity: 1; }
+
+    .featured-left { }
+    .featured-right { padding-top: 0.5rem; }
+
+    .featured-right .card-desc {
+      font-size: 1.08rem;
+      color: rgba(237, 232, 224, 0.55);
+    }
 
     .work-card .arrow {
       position: absolute;
@@ -267,6 +360,10 @@
       font-weight: 400;
       line-height: 1.05;
       margin-bottom: 0.6rem;
+    }
+
+    .work-card.featured .card-name {
+      font-size: clamp(2.2rem, 4vw, 3.2rem);
     }
 
     .card-role {
@@ -302,6 +399,12 @@
       color: var(--muted);
       border: 1px solid var(--border);
       padding: 0.28rem 0.65rem;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .work-card:hover .tag {
+      color: rgba(237, 232, 224, 0.6);
+      border-color: rgba(237, 232, 224, 0.15);
     }
 
     /* ── ABOUT ── */
@@ -354,6 +457,12 @@
       background: var(--surface);
       border: 1px solid var(--border);
       padding: 0.38rem 0.85rem;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .chip:hover {
+      background: var(--surface-2);
+      border-color: rgba(237, 232, 224, 0.15);
     }
 
     .detail-rows { padding-top: 1rem; }
@@ -476,15 +585,19 @@
       .nav-links { display: none; }
       .hero { padding: 0 1.5rem 4rem; }
       .hero-bottom { flex-direction: column; align-items: flex-start; }
+      .hero-right { align-items: flex-start; }
       .hero-meta { text-align: left; }
       section { padding: 5rem 1.5rem; }
       .work-grid { grid-template-columns: 1fr; }
+      .work-card.featured { grid-template-columns: 1fr; gap: 1.5rem; }
       #about { grid-template-columns: 1fr; gap: 3rem; }
       footer { flex-direction: column; gap: 0.75rem; text-align: center; }
     }
   </style>
 </head>
 <body>
+
+  <div id="progress"></div>
 
   <nav id="nav">
     <a href="#" class="nav-logo">T · O</a>
@@ -506,11 +619,14 @@
     </h1>
     <hr class="hero-rule">
     <div class="hero-bottom">
-      <p class="hero-descriptor">Software engineer & web designer. Building clean, functional digital work from the Big Island.</p>
-      <div class="hero-meta">
-        <p>Big Island, Hawaiʻi</p>
-        <p>Web Design · Development</p>
-        <p>Security · SEO</p>
+      <p class="hero-descriptor">Engineer by discipline, designer by instinct. I build software products and ship client sites from the Big Island.</p>
+      <div class="hero-right">
+        <div class="hero-meta">
+          <p>Big Island, Hawaiʻi</p>
+          <p>Web Design · Development</p>
+          <p>Security · SEO</p>
+        </div>
+        <a href="#work" class="hero-cta">View Work ↓</a>
       </div>
     </div>
   </section>
@@ -519,26 +635,31 @@
     <div class="section-label reveal">Selected Work</div>
     <div class="work-grid reveal d1">
 
-      <div class="work-card">
+      <a href="https://github.com/Tdrizz/unifdata" target="_blank" rel="noopener" class="work-card featured">
         <span class="arrow">↗</span>
-        <div class="card-num">01</div>
-        <h3 class="card-name">UniData</h3>
-        <div class="card-role">Co-Founder</div>
-        <p class="card-desc">Co-founded a data-focused platform built to streamline how organizations access and act on information. Involved across product design, technical architecture, and positioning.</p>
-        <div class="card-tags">
-          <span class="tag">Startup</span>
-          <span class="tag">Product</span>
-          <span class="tag">Data</span>
-          <span class="tag">Full-Stack</span>
+        <div class="featured-left">
+          <div class="card-num">01</div>
+          <h3 class="card-name">unifdata</h3>
+          <div class="card-role">Co-Founder</div>
+          <div class="card-tags">
+            <span class="tag">Startup</span>
+            <span class="tag">Product</span>
+            <span class="tag">Data</span>
+            <span class="tag">Full-Stack</span>
+          </div>
         </div>
-      </div>
+        <div class="featured-right">
+          <p class="card-desc">Built a data analytics platform with a co-founder — from concept to working product. Led product design, technical architecture, and early positioning. Covered everything from UI/UX to backend infrastructure.</p>
+
+        </div>
+      </a>
 
       <div class="work-card">
         <span class="arrow">↗</span>
         <div class="card-num">02</div>
         <h3 class="card-name">Freelance<br>Web Design</h3>
         <div class="card-role">Independent · Designer & Developer</div>
-        <p class="card-desc">End-to-end web design and development for local businesses — from first concept to launch. Responsive builds, real contact forms, domain & hosting setup, and foundational SEO.</p>
+        <p class="card-desc">Custom websites for local Hawaiʻi businesses, built from first conversation to launch day. I handle the build, the hosting, the contact forms, and the SEO basics. Clients get a finished product — not a project.</p>
         <div class="card-tags">
           <span class="tag">Web Design</span>
           <span class="tag">HTML / CSS / JS</span>
@@ -555,16 +676,20 @@
     <div class="about-left">
       <div class="section-label reveal">About</div>
       <div class="about-text reveal d1">
-        <p>I'm a software engineer and web designer based on the Big Island of Hawaiʻi. I work at the intersection of clean design and practical engineering — building things that look sharp and <strong>actually work</strong>.</p>
-        <p>My background spans <strong>web design</strong>, <strong>backend configuration</strong>, <strong>security hardening</strong>, and <strong>AI data work</strong>. Whether it's launching a local business site from scratch or auditing a platform for vulnerabilities, I bring the same attention to detail to everything I ship.</p>
+        <p>I'm a software engineer and web designer based on the Big Island of Hawaiʻi. I work at the intersection of design and engineering — shipping <strong>SaaS products</strong>, building <strong>local business sites</strong>, and making things that hold up under real use.</p>
+        <p>My background covers <strong>full-stack development</strong>, <strong>security hardening</strong>, <strong>SEO fundamentals</strong>, and <strong>AI data work</strong>. I've launched a SaaS startup, designed and deployed client sites, and built production systems with Next.js, Supabase, and TypeScript. I care about craft — and I ship.</p>
         <div class="skills-block">
           <div class="skills-label">Skills & Tools</div>
           <div class="chips">
             <span class="chip">HTML</span>
             <span class="chip">CSS</span>
             <span class="chip">JavaScript</span>
+            <span class="chip">TypeScript</span>
             <span class="chip">Python</span>
             <span class="chip">React</span>
+            <span class="chip">Next.js</span>
+            <span class="chip">Supabase</span>
+            <span class="chip">Tailwind</span>
             <span class="chip">Web Design</span>
             <span class="chip">Security Auditing</span>
             <span class="chip">SEO</span>
@@ -591,7 +716,7 @@
         </div>
         <div class="detail-row">
           <div class="detail-key">Focus Areas</div>
-          <div class="detail-val">Web Design · Backend Config<br>Security Auditing · AI & Data Work</div>
+          <div class="detail-val">Web Design · Full-Stack Dev<br>Security Auditing · AI & Data Work</div>
         </div>
       </div>
     </div>
@@ -600,7 +725,7 @@
   <section id="contact">
     <div class="section-label reveal">Get in Touch</div>
     <h2 class="contact-headline reveal d1">
-      Let's build<br><em>something real.</em>
+      Have something<br><em>worth building?</em>
     </h2>
     <a href="mailto:tittanolson@gmail.com" class="contact-email-link reveal d2">tittanolson@gmail.com</a>
     <div class="contact-socials reveal d3">
@@ -616,8 +741,12 @@
 
   <script>
     const nav = document.getElementById('nav');
+    const progress = document.getElementById('progress');
+
     window.addEventListener('scroll', () => {
       nav.classList.toggle('scrolled', window.scrollY > 40);
+      const scrolled = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+      progress.style.width = (scrolled * 100) + '%';
     }, { passive: true });
 
     const reveals = document.querySelectorAll('.reveal');
